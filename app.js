@@ -12,6 +12,7 @@ const api = process.env.API_URL
 app.use(express.json())
 app.use(cors())
 app.use(`${api}/items`, itemRoutes)
+app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 
 const schema = Joi.object( {
     name: Joi.string().min(3).required()
