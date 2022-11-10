@@ -108,6 +108,18 @@ router.put('/:id', uploadOptions.single('uploads'), (req, res) => {
   });
 });
 
-
+router.delete('/:id', (req, res) => {
+  
+  let sql = `DELETE FROM item WHERE item_id = ${req.params.id}`;
+  con.query(sql, (error, results, fields) => {
+      if (error) {
+        return console.error(error.message);
+      }
+      
+      console.log(results);
+      return res.status(200).json(results);
+    });
+  
+});
 
 module.exports = router;
