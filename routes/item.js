@@ -85,6 +85,29 @@ router.get('/:id', (req, res) => {
   
 });
 
+router.put('/:id', uploadOptions.single('uploads'), (req, res) => {
+
+  const file = req.file;
+  
+  // console.log(req.file)
+  if (!file) return res.status(400).send('No image in the request');
+
+  const fileName = file.filename;
+  const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+  let img_path = `${basePath}${fileName}`
+  let sql = `UPDATE item SET description = ?, sell_price =?, cost_price=?, imagePath=? WHERE 
+  item_id = ?`;
+  console.log(fileName, sql)
+  con.query(sql, [req.body.description, req.body.sell_price, req.body.cost_price, img_path, req.params.id], (error, results, fields) => {
+      if (error) {
+          
+          return console.error(error.message);
+      }
+     
+      return res.status(200).json(results)
+  });
+});
+
 
 
 module.exports = router;
