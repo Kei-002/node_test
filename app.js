@@ -7,11 +7,13 @@ const cors = require('cors')
 const Joi = require("joi")
 
 const itemRoutes = require("./routes/item")
+const orderRoutes = require("./routes/order")
 const api = process.env.API_URL
 
 app.use(express.json())
 app.use(cors())
 app.use(`${api}/items`, itemRoutes)
+app.use(`${api}/orders`, orderRoutes)
 app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 
 const schema = Joi.object( {
